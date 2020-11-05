@@ -1,0 +1,393 @@
+% bagus_round20082018
+% modified from latex source for mid presentation at JAIST
+% comment from Akagi-sensei:
+% in this presentation, it is necessary to summarize the future prospects 
+% while showing the results so far.
+
+% What kind of direction this study will be proceeded in the future,
+% how important this study is in this direction, and
+% how much contributions can be expected, ...
+
+% compilation:
+% pdflatex filename.tex # but all path inside should be changed
+
+\pdfminorversion=4
+\documentclass[aspectratio=169]{beamer}
+\usepackage{animate} % for animation
+\usepackage{array,multirow,graphicx}
+\graphicspath{{/media/bagustris/atmaja/s3/zemi/bagus-zemi/2018-05-04/}
+               {/media/bagustris/atmaja/s3/zemi/bagus-zemi/2018-09-20/}}
+\setbeamertemplate{caption}[numbered]
+
+\usetheme[pageofpages=of,% String used between the current page and the
+                         % total page count.
+          alternativetitlepage=true,% Use the fancy title page.
+          titleline=true,
+          titlepagelogo=/media/bagustris/bagus/Pictures/logo/jaist_logo-3.png
+%          titlepagelogo=fig/jaist_logo.png
+          ]{Torino}
+          % change /beamerinnerthemefancy.sty to resize the logo
+\usecolortheme{freewilly}
+
+\author{Bagus Tris Atmaja \\ 
+        bagus@jaist.ac.jp}
+\title{\LARGE{Speech emotion recognition 
+    \newline from acoustic and text feature }}
+\institute{AIS-Lab \\ School of Information Science \\ JAIST}
+\date{\tiny Presented on  Indonesian student association at Kanazawa University \\ September 25, 2018}
+
+% The log drawn in the upper right corner.
+\logo{\includegraphics[height=0.07\paperheight]{/media/bagustris/bagus/Pictures/logo/jaist_logo-1.png}}
+
+\begin{document}
+
+\begin{frame}[t,plain]
+\titlepage
+\end{frame}
+
+\begin{frame}[t, fragile]{About Me...}
+\begin{itemize}
+\item Education:
+    \begin{itemize}
+    \item B.Eng in Engineering Physics ITS (2009)
+    \item M.Eng in Engineering Physics ITS (2012)
+    \item Research Student at Kumamoto University (2011-2012)
+    \end{itemize}
+\item Experience:
+    \begin{itemize}
+    \item Shimizu Seisakusyo, Kameyama-shi, Mie-ken (2012-2014)
+    \item VibrasticLab, Dept.　of Engineering Physics ITS (2014 - )
+    \item PhD student at Acoustic Information Science-Lab, JAIST (2017-)
+    \item Instructor at the Carpentries (2017-)
+    \end{itemize}
+\item Research interest:
+    \begin{itemize}
+    \item Speech processing
+    \item Noise control
+    \item Machine condition monitoring
+    \end{itemize}
+\end{itemize}
+\footnotetext{\tiny This slide .tex source can be download here: github.com/bagustris/beamer-nomi}
+\end{frame}
+
+\begin{frame}[t]{Research Motivation}
+\begin{itemize}
+  \item Speech contains a variety informations: linguistics, paralinguistics and
+  		nonlinguistics information.
+  \item Ideally, speech should convey the correct message (intelligibility) 
+  while sounding like human speech (naturalness) with the right prosody (expressiveness).
+  \item Most speech recognition system are focused on solving the first two 
+  		issues above.
+  \item We proposed to to recognize expressiveness in speech by using \textbf{linguistics (text)} 
+  		and \textbf{paralinguistics (acoustic)} features to obtain nonlinguistics (emotion) information. 
+  \item Why? Because text features can be extracted from through Automatic Speech Recognition
+        (ASR) or Speech to Text (SST) method (Google Assistant, Siri, Alexa, Cortana, DeepSpeech).
+  \end{itemize}
+\end{frame}
+
+%\begin{frame}[t, fragile]{Research Proposal　and Motivation}
+%	\begin{itemize}
+%		\item Main purpose: \\
+%				Robust speech emotion recognition system by utilizing acoustic 
+%						and text feature.
+%		\item Steps: \\
+%		\begin{enumerate}
+%			\item Build speech emotion recognition by using LSTM-RNN\footnotemark ~algorithm from sequential 
+%			acoustic feature and/or CNN\footnotemark ~algorithm from spectrograms feature.
+%			\item Build text emotion recognition by using new ANEW (Affective 
+%			norms for English word) analysis and compare it to machine learning method.
+%			\item Integrate step 1 and 2 to improve speech emotion performance.
+%		\end{enumerate}
+%	\end{itemize}
+%\centering 
+%\footnotetext[1]{\tiny Long short term memory - recurrent neural network}
+%\footnotetext[2]{\tiny Convolutional neural network}
+%\end{frame}
+
+\begin{frame}[t, fragile]
+\LARGE{Speech Recognition}:\\
+%\begin{center}
+\small{The ability of a machine or program to identify words and phrases in spoken language and convert them to a machine-readable format}
+%\begin{frame}[t, fragile]{Current works: Cross-cultural Video/Audio 
+%\\ Emotion Recognition}
+%\begin{itemize}
+%\item Task: Given German utterances with its label (Valence, arousal, and liking score) 
+%            to predict Hungarian utterances emotion score.
+%\item Proposed solution:Using LSTM algorithm to train valence, arousal and liking 
+%      from German language to predict its dimension in Hungarian from different 
+%      number of acoustic and visual features.
+%\item Network architecture
+%\begin{figure}
+\includegraphics[width=4.4in]{pict/sr.png}
+%\end{itemize}
+%\end{figure}
+\end{frame}
+
+\begin{frame}[t, fragile]{(Speech) Emotion Recognition}
+Speech emotion recognition is to study the formation and change of speaker’s emotional state from the speech signal perspective.
+\includegraphics[width=4in]{pict/ser.jpeg}
+%\footnotetext{\tiny Dimensional Sentiment Analysis for Chinese Phrases with Deep LSTM." IJCNLP (2017).}
+\end{frame}
+
+\begin{frame}[t, fragile]{Emotion in Category}
+According to Ekman\footnotemark, there are six basic (facial) emotions:
+\begin{columns}
+\column{.3\textwidth} 
+\begin{itemize}
+\item happy
+\item surprise
+\item fear
+\item disgust
+\item anger
+\item sad
+\end{itemize}
+\column{.6\textwidth} 
+\includegraphics[width=1.5in]{pict/basic_emotions.png}
+\end{columns}
+Recent research by Jack, R\footnotemark. E et.al. (also supported by J.H Turner) revealed 
+only 4 category of emotion: happy, sad, fear, anger.
+\footnotetext[1]{\tiny Ekman, P., Friesen, W. V., Ellsworth, P. "Emotion in the Human Face..". Pergamon (1972).}
+\footnotetext[2]{\tiny Jack, Rachael E., et al. Four not six: Revealing culturally common facial expressions of emotion. Journal of Experimental Psychology: General 145.6 (2016): 708.}
+\end{frame}
+
+\begin{frame}[t, fragile]{Emotion in Dimensional VA(D) Space}
+\includegraphics[width=3.5in]{pict/va-space.png}
+\newline
+Valence: Happy/Unphappy, Arousal: Activity, Dominance: Potency
+\end{frame}
+
+%\begin{frame}[t, fragile]{Acoustic Features}
+%\begin{itemize}
+%\item Acoustic features are extracted from speech waveform using eGeMAPS 
+%      resulting 23 acoustic low-level descriptors (LLDs) ex- tracted every 10 ms 
+%      over a short-term frame.
+%\item openXBOW was used to extract bag-of-acoustic-words (BoAW) from 23 LLDs.
+%\item This speech features will be trained using CNN and/or RNN network for 
+%      comparison with text network and speech-text network.
+%\end{itemize}
+%\end{frame}
+
+%\begin{frame}[t, fragile]{Current works: Cross-cultural Video/Audio 
+%\\ Emotion Recognition}
+%\begin{columns}
+%\column{.4\textwidth} 
+%\begin{table}
+%  \caption{Parameters in LSTM network}
+%  \label{tab:lstm}
+%  \begin{tabular}{ll}
+%    \hline
+%    Parameter & Value \\
+%    \hline
+%    batch size    & 34       \\
+%    learning rate & 0.001    \\
+%    num iter      & 50      \\
+%    num units 1   & 128     \\
+%    num units 2   & 64      \\
+%    bidirectional & False    \\
+%    dropout       & 0.2     \\
+%    \hline
+%\end{tabular}
+%\end{table}
+%\column{.6\textwidth} 
+%\includegraphics[width=2.5in]{/media/bagustris/atmaja/mypaper/2018/avec2018/pict/CCC_mono.png}
+%\end{columns}
+%\end{frame}
+
+% result, optimal set is 20 features
+%\begin{frame}[t, fragile]{Current works: Cross-cultural Video/Audio 
+%\\ Emotion Recognition's Result}
+%\begin{table}
+%\caption{Evaluation results using German/Hungarian emotion recognition using different
+%        number of features}
+%\begin{tabular}{c c c c c}
+%\hline
+%Features Set	&	Arousal	&	Valence	&	Liking	&	Average \\
+%\hline
+%Baseline (100) 	&	0.615	&	0.603	&	0.273	&	0.497 \\
+%Selected (6)	&	0.641	&	0.636	&	0.278	&	0.518 \\
+%Selected (10)	&	0.660	&	0.620	&	0.298	&	0.526 \\
+%Selected (15)	&	0.622	&	0.623	&	\textbf{0.314}	&	0.520 \\
+%Selected (20)	&	0.616	&	0.596	&	0.299	&	0.504 \\
+%Optimal Set	&		\textbf{0.678}	&		\textbf{0.654}	&	0.304	&	\textbf{0.545} \\
+%\hline
+%\end{tabular}
+%\label{tab:DevelDE}
+%\end{table}
+%Optimal set is optimized features for each dimension only.
+%\end{frame}
+
+\begin{frame}[t, fragile]{How to determine emotion from speech?}
+To determine emotion from speech we extract acoustic features and train them in (deep) 
+learning method.\\
+\includegraphics[width=3.5in]{pict/speech_feature.png}
+\newline
+TEO: The Teager-energy-operator (proposed by Teager, 1990) based on theory that 
+hearing is the process of detecting energy.
+\end{frame}
+
+\begin{frame}[t, fragile]
+\textbf{How to obtain text feature?}
+\begin{columns}
+\column{.53\textwidth}
+	\begin{figure} 
+	\animategraphics[autoplay,loop, width=\textwidth]{10}{fig/rnn_anim-}{0}{201}
+	\caption{\small {Data flow in Deep speech}  
+	\tiny{https://hacks.mozilla.org/2017/11/a-journey-to-10-word-error-rate/}}
+	\end{figure} 
+\column{.47\textwidth}
+\begin{itemize}
+	\vskip2ex
+	\item Given speech spectrograms (time-frequency) as input, RNN train to produce output characters directly.
+	\item The output of the network is a matrix of character probabilities over time
+	\item For each time step, the network outputs one probability for each character in the alphabet 
+	(likelihood of that character corresponding to what’s being said in the audio at that time).
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}[t, fragile]{How to use text feature?}
+\begin{itemize}
+\item New Affective Norms of English Words (ANEW\footnotemark) contain of 13,915 word with its valence
+      arousal, and dominance value that can be used to predict emotion in text.
+\includegraphics[width=4in]{/media/bagustris/atmaja/s3/kenkyu/pic/anew_table.png}
+\footnotetext[3]{\tiny A. B. Warriner, V. Kuperman, and M. Brysbaert, “Norms of valence, arousal, and dominance for 13,915 English lemmas,” Behav. Res. Methods, vol. 45, no. 4, pp. 1191–1207, 2013}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t, fragile]{How to use text feature? [2]}
+\begin{itemize}
+\item Perform ANEW analysis to calculate VAD score from IEMOCAP\footnotemark ~dataset.
+\item To compute total VAD score in each utterances, we currently use mean and median
+      method for each words in utterances that has VAD score in ANEW list.
+\item Compare result from ANEW analysis with IEMOCAP evaluation.
+\item Expected result: \\
+      Score of CCC, CC and RMSE.
+\end{itemize}
+\footnotetext[4]{\tiny C. Busso et al., “IEMOCAP: Interactive emotional dyadic motion capture database,” Lang. Resour. Eval., vol. 42, no. 4, pp. 335–359, 2008.}
+\end{frame}
+
+%\begin{frame}[t, fragile]{Text Features: bag-of-word}
+%\begin{itemize}
+%\item a bag-of-words feature representation based on the transcription of the speech are generated with openXBOW\footnotemark ~and used as additional features. 
+%\item The dictionary for these textual features is learnt from the training partition taking only the terms with at least two occurrences into account. This results in a dictionary of "n-number" words, where only unigrams are considered. 
+%\item In total, the bag-of-text-words (BoTW) features contain "n-number" features. This text features will be trained along with acoustic feature fed to LSTM network.
+%\end{itemize}
+%\footnotetext[5]{\tiny Maximilian Schmitt and Bj¨orn W. Schuller. 2016. openXBOW – Introducing the Passau open-source crossmodal Bag-of-Words toolkit. preprint arXiv:1605.06778 (2016).}
+%\end{frame}
+
+\begin{frame}[t, fragile]{How to train speech-text feature?}
+\begin{itemize}
+\item This network consist of two part, feature extraction part and LSTM-RNN part.
+\item In this scenario, we extracted all feature from acoustic and text as described
+      in the previous page.
+\item The extracted features are concatenated to feed 2 layer LSTM and model the 
+      contextual information in the label.
+\end{itemize}
+\includegraphics[width=4in]{/media/bagustris/atmaja/s3/kenkyu/pic/speech-text.png}
+\end{frame}
+
+\begin{frame}[t, fragile]{How to evaluate the system?}
+We use the following three different objective function to measure the performance.
+$x$ is each VAD (valence, arousal, dominance) score from dataset, 
+and $y$ is predicted each VAD score from our algorithm.
+
+\begin{itemize}
+\item Concordance Correlation Coefficient (CCC): 
+\begin{equation}
+	\rho_c = \dfrac{2\rho \sigma_x \sigma_y}
+			{\sigma_x^2 + \sigma_y^2 + (\mu_x - \mu_y)^2}
+\label{eq:ccc}
+\end{equation}
+\item Pearson Correlation Coefficient (CC):
+\begin{equation}
+    \rho_{xy} = \dfrac {cov(x, y)}{\sigma_x \sigma_y}
+    \label{eq:cc}
+\end{equation}
+\item Root mean squared error (RMSE):
+\begin{equation}
+    RMSE = \sqrt{\dfrac{\sum_{n=1}^{N} (x-y)^2}{N}}
+\label{eq:rmse}
+\end{equation}
+\end{itemize}
+\end{frame}
+
+%\begin{frame}[t, fragile]{Next works}
+%\begin{itemize}
+%	\item Implement feature selection from bag-of-words to find the ideal 
+%	      feature numbers based on CCC score (currently we extract 100 features 
+%	      from acoustic LLDs\footnotemark ~using bag-of-words)
+%	\item Build speech emotion recognition system using CNN from spectrograms 
+%	      features.
+%	\item Compare RNN and CNN architecture for speech emotion recognition, 
+%	      if possible, integrate it to CRNN network and compare the result with 
+%	      previous study.
+%	\item Compare text emotion recognition from ANEW analysis and machine 
+%	      learning method.
+%	\item Find a method to incorporate result from text emotion recognition to
+%	      speech emotion recognition that can improve the performance.
+%\end{itemize}
+%\footnotetext[5] {\centering \tiny Low level descriptors, as described in F. Eyben et al., “The Geneva Minimalistic Acoustic Parameter Set (GeMAPS) for Voice Research and Affective Computing,” IEEE Trans. Affect. Comput., vol. 7, no. 2, pp. 190–202, 2016.}
+%\end{frame}
+
+\begin{frame}[t, fragile]{What's the contribution of this research?}
+\begin{itemize}
+	\item The use of deep learning technique (LSTM-RNN/CNN) for dimensional 
+	      speech emotional recognition.
+	\item The number of dominant feature extracted from bag-of-acoustic-words
+	      (BoAW) and bag-of-text-words (BoTW) that contributes significantly to 
+	      speech emotion recognition
+	      performance by feature selection algorithm.
+	\item A VAD-based text emotion recognition method by (1) ANEW analysis,  and (2) 
+	      machine learning algorithm. 
+	\item A method to integrate acoustic and text feature for speech emotion 
+	      recognition.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t, fragile]
+\vspace{60pt}
+\begin{center}
+\LARGE{Terima Kasih}
+\end{center}
+\end{frame}
+
+\begin{frame}[t, fragile]{Current works: Cross-cultural Video/Audio 
+Emotion Recognition}
+\begin{itemize}
+\item Task: Given German utterances with its label (Valence, arousal, and liking score) 
+            to predict Hungarian utterances emotion score.
+\item Proposed solution:Using LSTM algorithm to train valence, arousal and liking 
+      from German language to predict its dimension in Hungarian from different 
+      number of acoustic and visual features.
+\item Network architecture:\\
+\includegraphics[width=2.3in]{/media/bagustris/atmaja/s3/mypaper/2018/avec2018/pict/lstm.eps}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t, fragile]{Current works: Cross-cultural Video/Audio Emotion Recognition}
+\begin{columns}
+\column{.4\textwidth} 
+\begin{table}
+  \caption{Parameters in LSTM network}
+  \label{tab:lstm}
+  \begin{tabular}{ll}
+    \hline
+    Parameter & Value \\
+    \hline
+    batch size    & 34       \\
+    learning rate & 0.001    \\
+    num iter      & 50      \\
+    num units 1   & 128     \\
+    num units 2   & 64      \\
+    bidirectional & False    \\
+    dropout       & 0.2     \\
+    \hline
+\end{tabular}
+\end{table}
+\column{.6\textwidth} 
+\includegraphics[width=2.7in]{/media/bagustris/atmaja/s3/mypaper/2018/avec2018/pict/CCC_mono.png}
+\end{columns}
+\end{frame}
+
+\end{document}
+
