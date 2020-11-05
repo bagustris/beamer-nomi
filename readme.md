@@ -1,3 +1,6 @@
+Beamer Nomi is derivation of Beamer Torino with focus on blue colors (dark blue to light blue). Particularly, I made this template suits the color of my university, JAIST.
+
+
 ## Installation
 
 Move all files in this repository to ~/texmf/tex/latex/beamer:
