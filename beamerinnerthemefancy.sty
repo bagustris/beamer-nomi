@@ -74,7 +74,7 @@
 }
 
 % Alternative title page, you should use this in a frame with the [plain]
-% option.
+% option. \setlength\lineskip{6pt} to add space between line (words)
 \defbeamertemplate*{title page alternative}{fancy theme}[1][]
 {
   {\parskip0pt\offinterlineskip%
@@ -82,7 +82,7 @@
   \@tempdima=\textwidth\textwidth=\paperwidth\hsize=\textwidth\def\\{,}\vbox{}\vskip-1.5ex%
     % Title.
     \begin{beamercolorbox}[wd=\paperwidth,ht=.4\paperheight,center,#1]{title page header}
-      \usebeamerfont{title}\inserttitle\par%
+      \usebeamerfont{title}\setlength\lineskip{6pt}\inserttitle\par%
       \ifx\insertsubtitle\@empty%
       \else%
         \vskip0.25em%
